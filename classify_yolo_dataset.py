@@ -8,6 +8,8 @@ import cv2
 import optionss as ops
 
 work_path = os.path.dirname(os.path.realpath(__file__))
+ORIGINAL = "original"
+BOXED = "boxed"
 
 
 def create_dir_if_not_exist(dir_path):
@@ -37,7 +39,7 @@ def plot_one_box(x, image, color=None, label=None, line_thickness=None):
                     [225, 255, 255], thickness=tf, lineType=cv2.LINE_AA)
 
 
-def draw_box_on_image(image_name, classes, colors, class_name, save_type):
+def draw_box_on_image(image_name, classes, colors, class_name, save_type, single_class=False):
     save_type = save_type
     box_count = 0
 
@@ -47,7 +49,7 @@ def draw_box_on_image(image_name, classes, colors, class_name, save_type):
     lines_in_txt = open(txt_path) if os.path.exists(txt_path) else []
     image = cv2.imread(image_path)
 
-    if save_type == "boxed":
+    if save_type == BOXED:
         try:
             height, width, channels = image.shape
         except Exception as e:
@@ -58,6 +60,8 @@ def draw_box_on_image(image_name, classes, colors, class_name, save_type):
         for line in lines_in_txt:
             staff = line.split()
             class_idx = int(staff[0])
+            if single_class and classes[class_idx] != class_name:
+                continue
 
             x_center, y_center, w, h = float(staff[1]) * width, float(staff[2]) * height, float(
                 staff[3]) * width, float(
@@ -73,6 +77,7 @@ def draw_box_on_image(image_name, classes, colors, class_name, save_type):
 
         image = cv2.resize(image, ops.SAVE_IMAGE_SIZE)
 
+    save_type = ("single_" if single_class else "") + save_type
     save_dir = f"{work_path}/{save_type}_saved_image/{class_name}"
     create_dir_if_not_exist(save_dir)
     cv2.imwrite(f"{save_dir}/{image_name}.jpg", image)
@@ -94,7 +99,7 @@ def make_class_list_for_img_file(class_index_number):
     return temp
 
 
-def start_process(save_type=None):
+def start_process(save_type=None, single_class=False):
     class_list = ops.CLASS_LIST
     random.seed(42)
     colors = [[random.randint(0, 255) for _ in range(3)] for _ in range(len(class_list))]
@@ -108,11 +113,17 @@ def start_process(save_type=None):
         image_total += len(image_list)
 
         for image_name in image_list:
-            box_counts = draw_box_on_image(image_name, class_list, colors, class_name, save_type)
+            box_counts = draw_box_on_image(image_name, class_list, colors, class_name, save_type, single_class)
             box_total += box_counts
             image_total += 1
 
             print('Processed Box Count:', box_total, 'Processed Image Count:', image_total)
+
+
+def run_process(process_type, single_class=None):
+    start_process(process_type, single_class)
+    print(f"The {process_type} images were saved in the program directory.")
+    input(f"\nPress any key for continue...")
 
 
 if __name__ == '__main__':
@@ -122,6 +133,7 @@ if __name__ == '__main__':
         print("")
         print("1 - Classify original images save")
         print("2 - Classify boxed draw images save")
+        print("3 - Classify boxed draw images save (draw box only for relevant class)")
         print("0 - Exit")
         print("")
 
@@ -129,13 +141,11 @@ if __name__ == '__main__':
 
         if input_opt.isnumeric():
             if input_opt == "1":
-                start_process("original")
-                print("The original images were saved in the program directory.")
-                break
+                run_process(ORIGINAL)
             if input_opt == "2":
-                start_process("boxed")
-                print("The boxed draw images were saved in the program directory.")
-                break
+                run_process(BOXED)
+            if input_opt == "3":
+                run_process(BOXED, True)
             if input_opt == "0":
                 break
         else:

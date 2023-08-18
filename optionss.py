@@ -1,7 +1,7 @@
 
 SAVE_IMAGE_SIZE = (500, 500)
-IMG_FILES_DIR = r"C:\Users\ASUS\Desktop\semboller.v5i.yolov8\valid\images"
-LABEL_FILES_DIR = r"C:\Users\ASUS\Desktop\semboller.v5i.yolov8\valid\labels"
+IMG_FILES_DIR = r"C:\Users\ASUS\Desktop\valid\images"
+LABEL_FILES_DIR = r"C:\Users\ASUS\Desktop\valid\labels"
 CLASS_LIST = ['0', '1', '2', '2_adam_ustunde_oklu', '2_kare', '2_kare_ve_yuvarlak', '2_kat_kagit', '3',
               '3_adam_topluluk', '3gen_cetvel', '3gen_goz', '3gen_icinde_3gen', '3gen_ikili', '3gen_katmanli',
               '3gen_sekil', '3gen_ucak_3_noktali', '3top_cizgili', '3top_ince', '3top_kalin', '4', '4lu_ay_deseni',
