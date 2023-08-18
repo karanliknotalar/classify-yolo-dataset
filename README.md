@@ -11,8 +11,8 @@ Open optionss.py and edit dir paths.
 2. Open `options.py` and set your directory paths.
     1. ###### Example Options
        > `SAVE_IMAGE_SIZE` = **(500, 500)**\
-       `IMG_FILES_DIR` = **r"C:\Users\ASUS\Desktop\semboller.v5i.yolov8\valid\images**"\
-       `LABEL_FILES_DIR` = **r"C:\Users\ASUS\Desktop\semboller.v5i.yolov8\valid\labels"**\
+       `IMG_FILES_DIR` = **r"C:\Users\ASUS\Desktop\anydatasets.v5i.yolov8\valid\images**"\
+       `LABEL_FILES_DIR` = **r"C:\Users\ASUS\Desktop\anydatasets.v5i.yolov8\valid\labels"**\
        `CLASS_LIST` = **['dog', 'cat', 'people', 'coffe']**\
 
 3. Run `python classify_yolo_dataset.py` in your terminal.
