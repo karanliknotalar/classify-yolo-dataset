@@ -2,6 +2,8 @@ import glob
 import os
 import random
 from sys import platform
+import tkinter
+from PIL import Image, ImageTk
 
 import cv2
 
@@ -10,6 +12,7 @@ import optionss as ops
 work_path = os.path.dirname(os.path.realpath(__file__))
 ORIGINAL = "original"
 BOXED = "boxed"
+SHOW = "show"
 
 
 def create_dir_if_not_exist(dir_path):
@@ -49,7 +52,7 @@ def draw_box_on_image(image_name, classes, colors, class_name, save_type, single
     lines_in_txt = open(txt_path) if os.path.exists(txt_path) else []
     image = cv2.imread(image_path)
 
-    if save_type == BOXED:
+    if save_type == BOXED or save_type == SHOW:
         try:
             height, width, channels = image.shape
         except Exception as e:
@@ -76,6 +79,22 @@ def draw_box_on_image(image_name, classes, colors, class_name, save_type, single
             box_count += 1
 
         image = cv2.resize(image, ops.SAVE_IMAGE_SIZE)
+
+    if save_type == SHOW:
+        tk = tkinter.Tk()
+        tk.title(image_name)
+        screen_width = tk.winfo_screenwidth()
+        screen_height = tk.winfo_screenheight()
+        im_height, im_width, im_channels = image.shape
+        x = (screen_width / 2) - (im_width / 2)
+        y = (screen_height / 2) - (im_height / 2)
+        tk.geometry('%dx%d+%d+%d' % (im_width, im_height + 50, x, y))
+
+        im = Image.fromarray(image)
+        imgtk = ImageTk.PhotoImage(image=im)
+        tkinter.Label(tk, image=imgtk).pack()
+        tk.mainloop()
+        return box_count
 
     save_type = ("single_" if single_class else "") + save_type
     save_dir = f"{work_path}/{save_type}_saved_image/{class_name}"
@@ -134,6 +153,8 @@ if __name__ == '__main__':
         print("1 - Classify original images save")
         print("2 - Classify boxed draw images save")
         print("3 - Classify boxed draw images save (draw box only for relevant class)")
+        print("4 - Classify boxed draw images SHOW")
+        print("5 - Classify boxed draw images SHOW (draw box only for relevant class)")
         print("0 - Exit")
         print("")
 
@@ -146,6 +167,10 @@ if __name__ == '__main__':
                 run_process(BOXED)
             if input_opt == "3":
                 run_process(BOXED, True)
+            if input_opt == "4":
+                run_process(SHOW)
+            if input_opt == "5":
+                run_process(SHOW, True)
             if input_opt == "0":
                 break
         else:
