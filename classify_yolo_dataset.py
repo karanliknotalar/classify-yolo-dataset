@@ -2,8 +2,7 @@ import glob
 import os
 import random
 from sys import platform
-import tkinter
-from PIL import Image, ImageTk
+from tkinter import Tk
 
 import cv2
 
@@ -63,6 +62,12 @@ def draw_box_on_image(image_name, classes, colors, class_name, save_type, single
         for line in lines_in_txt:
             staff = line.split()
             class_idx = int(staff[0])
+
+            if save_type is SHOW and not single_class:
+                print(f"Txt Label Line: {' '.join(staff)} |>|>|> Class Name: {classes[class_idx]}")
+            elif save_type is SHOW and single_class and classes[class_idx] == class_name:
+                print(f"Txt Label Line: {' '.join(staff)} |>|>|> Class name: {classes[class_idx]}")
+
             if single_class and classes[class_idx] != class_name:
                 continue
 
@@ -81,19 +86,21 @@ def draw_box_on_image(image_name, classes, colors, class_name, save_type, single
         image = cv2.resize(image, ops.SAVE_IMAGE_SIZE)
 
     if save_type == SHOW:
-        tk = tkinter.Tk()
-        tk.title(image_name)
-        screen_width = tk.winfo_screenwidth()
-        screen_height = tk.winfo_screenheight()
+        tk = Tk()
+        screen_width, screen_height = tk.winfo_screenwidth(), tk.winfo_screenheight()
         im_height, im_width, im_channels = image.shape
-        x = (screen_width / 2) - (im_width / 2)
-        y = (screen_height / 2) - (im_height / 2)
-        tk.geometry('%dx%d+%d+%d' % (im_width, im_height + 50, x, y))
 
-        im = Image.fromarray(image)
-        imgtk = ImageTk.PhotoImage(image=im)
-        tkinter.Label(tk, image=imgtk).pack()
-        tk.mainloop()
+        x = int((screen_width / 2) - (im_width / 2))
+        y = int((screen_height / 2) - (im_height / 2))
+
+        print(f"Showing IMG/TXT name: {image_name}\n")
+
+        cv2.namedWindow(image_name)
+        cv2.moveWindow(image_name, x, y)
+        cv2.imshow(image_name, image)
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()
+
         return box_count
 
     save_type = ("single_" if single_class else "") + save_type
@@ -136,7 +143,8 @@ def start_process(save_type=None, single_class=False):
             box_total += box_counts
             image_total += 1
 
-            print('Processed Box Count:', box_total, 'Processed Image Count:', image_total)
+            if save_type is not SHOW:
+                print('Processed Box Count:', box_total, 'Processed Image Count:', image_total)
 
 
 def run_process(process_type, single_class=None):
