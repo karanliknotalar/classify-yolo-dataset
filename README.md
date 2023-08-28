@@ -1,7 +1,6 @@
-# Draw Box or Original image Classify Yolo Dataset
-Split your existing dataset into folders with classes. While doing this, make it as an original picture or a box-drawn
-picture and save it.
-
+# Classify Box Drawn Picture or Original Picture
+Split the dataset into folders with class names. In the final, there are pictures of that class in each folder.
+ 
 # Augment Dataset by 3x
 You can also easily triple your dataset and thus increase your training accuracy.
 
