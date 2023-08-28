@@ -1,11 +1,11 @@
-# Draw or Original Classify Yolo Dataset or Augment Dataset
-
+# Draw Box or Original image Classify Yolo Dataset
 Split your existing dataset into folders with classes. While doing this, make it as an original picture or a box-drawn
 picture and save it.
 
+# Augment Dataset by 3x
 You can also easily triple your dataset and thus increase your training accuracy.
 
-## Options and Usage
+## Options edit and Usage
 
 Open optionss.py and edit dir paths.
 
