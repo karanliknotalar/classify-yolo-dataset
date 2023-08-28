@@ -17,7 +17,7 @@ Open optionss.py and edit dir paths.
        `CLASS_LIST` = **['dog', 'cat', 'people', 'coffe']**
 
 3. Run `python classify_yolo_dataset.py` in your terminal.
-4. You can also use the following command to increase the dataset.  Run `python augment_dataset.py` Thus, you can triple your existing data set by inverting both horizontally and vertically.
+4. You can also use the following command to increase the dataset.  Run `python augment_dataset.py`. Thus, you can triple your existing data set by flipping  horizontally and vertically.
 
 ## Note
 
