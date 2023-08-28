@@ -1,4 +1,4 @@
-# Draw or Original Classify Yolo Dataset
+# Draw or Original Classify Yolo Dataset or Augment Dataset
 
 Split your existing dataset into folders with classes. While doing this, make it as an original picture or a box-drawn
 picture and save it.
