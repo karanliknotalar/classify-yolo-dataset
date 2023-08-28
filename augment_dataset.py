@@ -52,8 +52,9 @@ def augment_dataset(file_name, flip):
 
     # If there is a file with the same name,
     # it should delete the remaining file from the previous operation to recreate it.
-    if path.exists(path.join(output_txt_dir, file_name + "_" + flip + ".txt")):
-        remove(path.join(output_txt_dir, file_name + "_" + flip + ".txt"))
+    _output_txt_dir = path.join(output_txt_dir, file_name + "_" + flip + ".txt")
+    if path.exists(_output_txt_dir):
+        remove(_output_txt_dir)
 
     # We are reading the lines in the label file.
     lines_in_txt = open(txt_path) if path.exists(txt_path) else []
@@ -61,7 +62,7 @@ def augment_dataset(file_name, flip):
     # by looping the read lines in order, we make the direction calculation and save it.
     for line in lines_in_txt:
         flipped_label = flip_label(line, flip)
-        with open(path.join(output_txt_dir, file_name + "_" + flip + ".txt"), mode="a+") as f:
+        with open(_output_txt_dir, mode="a+") as f:
             f.write(flipped_label + "\n")
 
     # We also include the original files.
