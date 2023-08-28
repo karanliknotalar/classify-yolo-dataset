@@ -119,7 +119,7 @@ def make_class_list_for_img_file(class_index_number):
             lines = f.readlines()
             file_name, ext = os.path.splitext(os.path.basename(txt_file))
             for line in lines:
-                orj_number = int(line.split(" ")[0])
+                orj_number = int(line.split()[0])
                 if orj_number == class_index_number:
                     temp.append(file_name)
     return temp
@@ -163,6 +163,7 @@ if __name__ == '__main__':
         print("3 - Classify boxed draw images save (draw box only for relevant class)")
         print("4 - Classify boxed draw images SHOW")
         print("5 - Classify boxed draw images SHOW (draw box only for relevant class)")
+        print("6 - Augment Dataset")
         print("0 - Exit")
         print("")
 
@@ -179,6 +180,8 @@ if __name__ == '__main__':
                 run_process(SHOW)
             if input_opt == "5":
                 run_process(SHOW, True)
+            if input_opt == "6":
+                import augment_dataset
             if input_opt == "0":
                 break
         else:

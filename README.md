@@ -3,11 +3,13 @@
 Split your existing dataset into folders with classes. While doing this, make it as an original picture or a box-drawn
 picture and save it.
 
+You can also easily triple your dataset and thus increase your training accuracy.
+
 ## Options and Usage
 
 Open optionss.py and edit dir paths.
 
-1. Run `pip install opencv-python`
+1. Run `pip install opencv-python` and `pip install Pillow`
 2. Open `options.py` and set your directory paths.
     1. ###### Example Options
        > `SAVE_IMAGE_SIZE` = **(500, 500)**\
@@ -16,6 +18,7 @@ Open optionss.py and edit dir paths.
        `CLASS_LIST` = **['dog', 'cat', 'people', 'coffe']**
 
 3. Run `python classify_yolo_dataset.py` in your terminal.
+4. You can also use the following command to increase the dataset.  Run `python augment_dataset.py` Thus, you can triple your existing data set by inverting both horizontally and vertically.
 
 ## Note
 
